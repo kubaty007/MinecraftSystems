@@ -20,6 +20,13 @@ td{
     padding: 4px;
 }
 
+#wykresy{
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 /* inputs */
 table input{
     box-sizing: border-box;
