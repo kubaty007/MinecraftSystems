@@ -2,6 +2,14 @@
 
     session_start();
 
+    if(empty($_POST['ilosc_produktu'])){
+        $_SESSION['error'] = "wpisz wartość";
+        header("Location: magazyn.php");
+    } elseif (!is_numeric($_POST['ilosc_produktu'])){
+        $_SESSION['error'] = "wpisz wartość liczbową";
+        header("Location: magazyn.php");
+    }
+
     $database = @new mysqli('localhost', 'root', '', 'minecraftsystems');
 
     if($database->connect_errno!=0){

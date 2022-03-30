@@ -108,6 +108,10 @@
                         echo "<option value='".$row_przetwarzanie1['nazwa']."'>".$row_przetwarzanie1['nazwa']."</option>";
                     }
                     echo "<select/><input id='wybor_tworzenie' type='submit' value='Wybierz'></form>";
+                    if(isset($_SESSION['error'])){
+                        echo "<br/><span style='color: red'>".$_SESSION['error']."</span>";
+                        unset($_SESSION['error']);
+                    }
                 }
                 else{
                     $_SESSION['nazwa_produktu'] = $_POST['choice'];
@@ -138,7 +142,7 @@
                         ON materialy.id = receptura_materialy.id_materialy
                         WHERE produkty.nazwa =  '".$_SESSION['nazwa_produktu']."'
                         ORDER BY materialy.cena;");
-                    //$row_przetwarzanie2 = $result_przetwarzanie2->fetch_assoc();
+                    
 
                     
                     
@@ -155,7 +159,6 @@
                             <td rowspan='".$row_rowspan['liczba_rekordow']."'>".$row_przetwarzanie1['nazwa']."</td>";
 
                     $var1_taken = false;
-                    $var2_taken = false;
 
                     $shown_input = false;
 
@@ -167,10 +170,10 @@
                             $var1_taken = true;
                         }
 
-                        if(!$var2_taken){
+                        if($var1_taken){
                             $var2_stan_magazynowy = $row_przetwarzanie2['stan_magazynowy'];
                             $var2_wymagana_ilosc = $row_przetwarzanie2['wymagana_ilosc'];
-                            $var2_taken = true;
+                            
                         }
 
                         $max1 = floor($var1_stan_magazynowy / $var1_wymagana_ilosc);
@@ -185,7 +188,7 @@
                         echo "<td>".$row_przetwarzanie2['nazwa']."</td><td>".$row_przetwarzanie2['wymagana_ilosc']."</td><td>".$row_przetwarzanie2['stan_magazynowy']."</td>";
 
                         if(!$shown_input){
-                            echo "<td rowspan='".$row_rowspan['liczba_rekordow']."'><input id='ilosc_tworzenie' type='number' placeholder='max. ".$max."' min='0' max='".$max."' name='ilosc_produktu'></td>";
+                            echo "<td rowspan='".$row_rowspan['liczba_rekordow']."'><input id='ilosc_tworzenie' type='number' placeholder='max' min='0' max='max' name='ilosc_produktu' required></td>";
                             $shown_input = true;
                         }
 
@@ -194,6 +197,8 @@
 
                         }
                         echo "</table><input type='submit' value='Wytwórz'></form>";
+
+                        echo "<input id='max' type='hidden' value='".$max."'>";
                 }
 
             ?>
@@ -205,4 +210,5 @@
     </main>
 </body>
 <script src='main.js'></script>
+<script src='max.js'></script>
 </html>

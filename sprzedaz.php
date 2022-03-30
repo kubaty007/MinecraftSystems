@@ -54,12 +54,12 @@
                         <td>Ile chcesz sprzedać</td>
                     </tr>
                     <?php
-                        $result_sprzedaz=$database->query("SELECT produkty.nazwa, produkty.stan_magazynowy, produkty.cena FROM produkty");
+                        $result_sprzedaz=$database->query("SELECT produkty.id, produkty.nazwa, produkty.stan_magazynowy, produkty.cena FROM produkty");
 
                     
                         while($row_sprzedaz = $result_sprzedaz->fetch_assoc()){
 
-                            echo "<tr> <td>".$row_sprzedaz['nazwa']."</td> <td>".$row_sprzedaz['stan_magazynowy']."</td> <td>".$row_sprzedaz['cena']." zł</td><td><input type='number' min='0' max='".$row_sprzedaz['stan_magazynowy']."' placeholder='max. ".$row_sprzedaz['stan_magazynowy']."' name='".$row_sprzedaz['nazwa']."'></td></tr>";
+                            echo "<tr> <td>".$row_sprzedaz['nazwa']."</td> <td>".$row_sprzedaz['stan_magazynowy']."</td> <td>".$row_sprzedaz['cena']." zł</td><td><input type='number' min='0' max='".$row_sprzedaz['stan_magazynowy']."' placeholder='max. ".$row_sprzedaz['stan_magazynowy']."' name='".$row_sprzedaz['id']."'></td></tr>";
                         }
                     ?>
                     
@@ -71,9 +71,40 @@
         <fieldset>
             <legend>Historia transakcji</legend>
             <table>
-            <tr><td> ID </td><td> Data i godzina </td><td> Materiał </td><td> Ilość </td><td> Cena za szt. </td><td> Łączna wartość </td></tr>
+            <tr><td> ID </td><td> Data i godzina </td><td> Produkt </td><td> Ilość </td><td> Cena za szt. </td><td> Łączna wartość </td></tr>
             <?php
-               
+                $result_historia = $database->query("SELECT * FROM transakcje_sprzedaz ORDER BY transakcje_sprzedaz.data DESC");
+                while($row_historia = $result_historia->fetch_assoc()){
+                    
+                    //rowspan
+                    $result_rowspan = $database->query(
+                        "SELECT COUNT(*) AS 'liczba_rekordow' FROM transakcje_sprzedaz
+                        INNER JOIN transakcja_sprzedaz_produkty
+                        ON transakcje_sprzedaz.id = transakcja_sprzedaz_produkty.id_transakcje_sprzedaz
+                        INNER JOIN produkty
+                        ON produkty.id = transakcja_sprzedaz_produkty.id_produkty
+                        WHERE transakcje_sprzedaz.id = ".$row_historia['id'].";");
+                    $row_rowspan = $result_rowspan->fetch_assoc();
+
+                    //szczegoly tabeli
+                    $result_historia2 = $database->query(
+                        "SELECT produkty.nazwa, transakcja_sprzedaz_produkty.ilosc, produkty.cena FROM transakcje_sprzedaz
+                        INNER JOIN transakcja_sprzedaz_produkty
+                        ON transakcje_sprzedaz.id = transakcja_sprzedaz_produkty.id_transakcje_sprzedaz
+                        INNER JOIN produkty
+                        ON produkty.id = transakcja_sprzedaz_produkty.id_produkty
+                        WHERE transakcje_sprzedaz.id = ".$row_historia['id'].";");
+
+                    //tabela
+                    echo "
+                    <tr><td rowspan='".$row_rowspan['liczba_rekordow']."'> ".$row_historia['id']." </td><td rowspan='".$row_rowspan['liczba_rekordow']."'> ".$row_historia['data']." </td>";
+                    while($row_historia2 = $result_historia2->fetch_assoc()){
+
+                        $wartosc = $row_historia2['ilosc'] * $row_historia2['cena'];
+
+                        echo "<td>".$row_historia2['nazwa']."</td><td>".$row_historia2['ilosc']."</td><td>".$row_historia2['cena']." zł</td><td>".$wartosc." zł</td></tr>";
+                    }
+                }
             ?>
             </table>
         </fieldset>
