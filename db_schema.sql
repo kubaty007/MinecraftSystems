@@ -171,6 +171,27 @@ CREATE TABLE `transakcja_sprzedaz_produkty` (
   `ilosc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Zrzut danych tabeli `transakcja_sprzedaz_produkty`
+--
+
+INSERT INTO `transakcja_sprzedaz_produkty` (`id_produkty`, `id_transakcje_sprzedaz`, `ilosc`) VALUES
+(5, 1, 1),
+(0, 2, 1),
+(1, 3, 1),
+(3, 3, 2),
+(0, 4, 5),
+(8, 4, 3),
+(9, 4, 1),
+(0, 5, 3),
+(3, 5, 1),
+(6, 5, 1),
+(8, 5, 4),
+(9, 5, 2),
+(0, 6, 12),
+(3, 6, 1),
+(0, 7, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +213,19 @@ CREATE TABLE `transakcje_sprzedaz` (
   `id` int(11) NOT NULL,
   `data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_polish_ci;
+
+--
+-- Zrzut danych tabeli `transakcje_sprzedaz`
+--
+
+INSERT INTO `transakcje_sprzedaz` (`id`, `data`) VALUES
+(1, '2021-10-18 15:01:52'),
+(2, '2021-10-18 22:50:19'),
+(3, '2021-10-18 22:50:23'),
+(4, '2021-10-18 22:50:27'),
+(5, '2021-10-18 22:50:34'),
+(6, '2021-10-18 22:50:38'),
+(7, '2021-10-18 23:10:50');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -275,13 +309,13 @@ ALTER TABLE `receptury`
 -- AUTO_INCREMENT dla tabeli `transakcje_kupno`
 --
 ALTER TABLE `transakcje_kupno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT dla tabeli `transakcje_sprzedaz`
 --
 ALTER TABLE `transakcje_sprzedaz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- Ograniczenia dla zrzutów tabel

@@ -34,7 +34,6 @@
       
       google.charts.setOnLoadCallback(drawMaterialyStanChart);
 
-      
       google.charts.setOnLoadCallback(drawProduktyStanChart);
 
       google.charts.setOnLoadCallback(drawMaterialyWartoscChart);
