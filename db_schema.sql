@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Mar 2022, 17:56
+-- Czas generowania: 08 Lip 2022, 16:28
 -- Wersja serwera: 10.4.17-MariaDB
 -- Wersja PHP: 8.0.1
 
@@ -39,10 +39,10 @@ CREATE TABLE `materialy` (
 --
 
 INSERT INTO `materialy` (`id`, `nazwa`, `stan_magazynowy`, `cena`) VALUES
-(0, 'Kamień', 0, 5),
-(1, 'Żelazo', 0, 10),
-(2, 'Diament', 0, 20),
-(3, 'Patyk', 0, 2);
+(0, 'Kamień', 1, 5),
+(1, 'Żelazo', 1, 10),
+(2, 'Diament', 1, 20),
+(3, 'Patyk', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -62,18 +62,18 @@ CREATE TABLE `produkty` (
 --
 
 INSERT INTO `produkty` (`id`, `nazwa`, `cena`, `stan_magazynowy`) VALUES
-(0, 'Kamienny miecz', 16.8, 0),
-(1, 'Żelazny miecz', 28.8, 0),
-(2, 'Diamentowy miecz', 48.8, 0),
-(3, 'Kamienny kilof', 22.8, 0),
-(4, 'Żelazny kilof', 40.8, 0),
-(5, 'Diamentowy kilof', 76.8, 0),
-(6, 'Kamienna siekiera', 22.8, 0),
-(7, 'Żelazna siekiera', 40.8, 0),
-(8, 'Diamentowa siekiera', 76.8, 0),
-(9, 'Kamienna łopata', 10.8, 0),
-(10, 'Żelazna łopata', 16.8, 0),
-(11, 'Diamentowa łopata', 28.8, 0);
+(0, 'Kamienny miecz', 16.8, 1),
+(1, 'Żelazny miecz', 28.8, 1),
+(2, 'Diamentowy miecz', 48.8, 1),
+(3, 'Kamienny kilof', 22.8, 1),
+(4, 'Żelazny kilof', 40.8, 1),
+(5, 'Diamentowy kilof', 76.8, 1),
+(6, 'Kamienna siekiera', 22.8, 1),
+(7, 'Żelazna siekiera', 40.8, 1),
+(8, 'Diamentowa siekiera', 76.8, 1),
+(9, 'Kamienna łopata', 10.8, 1),
+(10, 'Żelazna łopata', 16.8, 1),
+(11, 'Diamentowa łopata', 28.8, 1);
 
 -- --------------------------------------------------------
 
@@ -159,6 +159,16 @@ CREATE TABLE `transakcja_kupno_materialy` (
   `ilosc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Zrzut danych tabeli `transakcja_kupno_materialy`
+--
+
+INSERT INTO `transakcja_kupno_materialy` (`id_transakcje_kupno`, `id_materialy`, `ilosc`) VALUES
+(1, 0, 10),
+(1, 1, 10),
+(1, 2, 10),
+(1, 3, 22);
+
 -- --------------------------------------------------------
 
 --
@@ -171,27 +181,6 @@ CREATE TABLE `transakcja_sprzedaz_produkty` (
   `ilosc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Zrzut danych tabeli `transakcja_sprzedaz_produkty`
---
-
-INSERT INTO `transakcja_sprzedaz_produkty` (`id_produkty`, `id_transakcje_sprzedaz`, `ilosc`) VALUES
-(5, 1, 1),
-(0, 2, 1),
-(1, 3, 1),
-(3, 3, 2),
-(0, 4, 5),
-(8, 4, 3),
-(9, 4, 1),
-(0, 5, 3),
-(3, 5, 1),
-(6, 5, 1),
-(8, 5, 4),
-(9, 5, 2),
-(0, 6, 12),
-(3, 6, 1),
-(0, 7, 8);
-
 -- --------------------------------------------------------
 
 --
@@ -203,6 +192,13 @@ CREATE TABLE `transakcje_kupno` (
   `data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_polish_ci;
 
+--
+-- Zrzut danych tabeli `transakcje_kupno`
+--
+
+INSERT INTO `transakcje_kupno` (`id`, `data`) VALUES
+(1, '2022-07-08 16:22:35');
+
 -- --------------------------------------------------------
 
 --
@@ -213,19 +209,6 @@ CREATE TABLE `transakcje_sprzedaz` (
   `id` int(11) NOT NULL,
   `data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_polish_ci;
-
---
--- Zrzut danych tabeli `transakcje_sprzedaz`
---
-
-INSERT INTO `transakcje_sprzedaz` (`id`, `data`) VALUES
-(1, '2021-10-18 15:01:52'),
-(2, '2021-10-18 22:50:19'),
-(3, '2021-10-18 22:50:23'),
-(4, '2021-10-18 22:50:27'),
-(5, '2021-10-18 22:50:34'),
-(6, '2021-10-18 22:50:38'),
-(7, '2021-10-18 23:10:50');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -309,13 +292,13 @@ ALTER TABLE `receptury`
 -- AUTO_INCREMENT dla tabeli `transakcje_kupno`
 --
 ALTER TABLE `transakcje_kupno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `transakcje_sprzedaz`
 --
 ALTER TABLE `transakcje_sprzedaz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ograniczenia dla zrzutów tabel

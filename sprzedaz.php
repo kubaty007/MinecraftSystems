@@ -39,12 +39,12 @@
         <ul class="links">
             <li><a href="zakup.php">Zakup</a></li>
             <li><a href="magazyn.php">Magazyn</a></li>
-            <li><a href="sprzedaz.php">Sprzedaz</a></li>
+            <li><a href="sprzedaz.php">Sprzedaż</a></li>
         </ul>
     </nav>
     <main>
         <fieldset>
-            <legend>Sprzedaważ produktów:</legend>
+            <legend>Sprzedaż produktów:</legend>
             <form method="POST" action="sprzedawanieSkrypt.php">
                 <table>
                     <tr>
